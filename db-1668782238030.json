@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "name": "rouge",
+      "atk": 10,
+      "id": 1
+    },
+    {
+      "name": "bold",
+      "atk": 2,
+      "id": 2
+    },
+    {
+      "name": "doom",
+      "atk": 666,
+      "id": 3
+    }
+  ]
+}

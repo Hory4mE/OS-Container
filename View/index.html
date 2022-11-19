@@ -1,0 +1,126 @@
+<html>
+
+<head>
+    <title>Currency</title>
+</head>
+
+<head>
+    <style>
+        a {
+            color: green;
+            font-family: verdana;
+            font-size: 120%;
+        }
+
+        h1 {
+            color: yellow;
+            font-family: verdana;
+            font-size: 300%;
+        }
+
+        .button {
+            background-color: #15c8ff;
+            /* Green */
+            border: none;
+            color: rgb(34, 34, 34);
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        label {
+            color: rgb(255, 150, 37);
+            font-family: verdana;
+            font-size: 160%;
+        }
+
+        table {
+            color: aquamarine;
+            font-size: 20px;
+            font-style: initial;
+            border-style: solid;
+            background-color: saddlebrown;
+            border-color: gray;
+            border-width: 2px;
+        }
+    </style>
+</head>
+<!-- <div class="navbar" id="myNavbar">
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+    <a href="#home">Home</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+    <a href="#login">Login</a>
+</div> -->
+
+<body background="D.jpg">
+    <h1>LATEST CURRENCY</h1>
+    <label for="Currency Symbol">Currency Symbols :</label>
+    <input type="text" id="inp" maxlength="16">
+    <br><br>
+    <button class="button" type="submit" onclick="onExport()">Show</button>
+    <br><br>
+    <label for="RESULT">Currency Rate (to THB)</label>
+
+    <br><br>
+    <!-- <label2 id="result1">SHIT</label2> -->
+    <table id="list"></table>
+
+    <script>
+        const apilink = "https://api.apilayer.com/exchangerates_data/latest?symbols=JPY&base=THB"
+
+        var myHeaders = new Headers();
+        myHeaders.append("apikey", "jZM2RFJhG82ekTeZ5WTml2Z3zD1OdeqY");
+
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: myHeaders
+        };
+
+        function show(data, txt) {
+            const obj = JSON.parse(data);
+            console.log(obj)
+            let tab =
+                `<tr>
+            <th>Currency</th>
+            <th>Rate</th>
+            <th>Date</th>
+                </tr>`;
+
+            tab += `<tr> 
+                <td>1 ${obj.base}</td>
+                <td>= ${JSON.stringify(obj.rates)}</td>
+                <td>${obj.date}</td>
+                </tr>`;
+
+            document.getElementById("list").innerHTML = tab;
+        }
+
+        async function onExport() {
+
+            var newTxt = document.getElementById("inp").value;
+
+            let find = new RegExp(document.getElementById('inp').value, 'g')
+
+            var replace = apilink.replace("JPY", newTxt)
+
+            const response = await fetch(replace, requestOptions)
+                .then(response => response.text())
+                .then(result => show(result, newTxt))
+                .catch(error => console.log('error', error));
+
+            // var data = await response.json;
+            // console.log(data);
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>
